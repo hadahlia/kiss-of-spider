@@ -2,6 +2,10 @@
 
 [ext_resource type="Script" uid="uid://cb4wo7w0e7yj5" path="res://scenes/entity/player_controls.gd" id="1_yo1yh"]
 
+[sub_resource type="Curve" id="Curve_yo1yh"]
+_data = [Vector2(0, 0), 0.0, 1.4, 0, 0, Vector2(0.74548733, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.42838097), 0.0, 0.0, 0, 0]
+point_count = 3
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fqy02"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fqy02"]
@@ -14,6 +18,7 @@ material = SubResource("StandardMaterial3D_fqy02")
 
 [node name="empress" type="CharacterBody3D" unique_id=191184070]
 script = ExtResource("1_yo1yh")
+dashCurve = SubResource("Curve_yo1yh")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1167960643]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -22,3 +27,11 @@ shape = SubResource("CapsuleShape3D_fqy02")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=801258340]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_yo1yh")
+
+[node name="stepCooldown" type="Timer" parent="." unique_id=107683400]
+wait_time = 0.15
+one_shot = true
+
+[node name="stepTime" type="Timer" parent="." unique_id=151191174]
+wait_time = 0.22
+one_shot = true
