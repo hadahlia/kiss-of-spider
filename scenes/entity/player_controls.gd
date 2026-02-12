@@ -8,15 +8,16 @@ extends CharacterBody3D
 @onready var step_cooldown: Timer = $stepCooldown
 @onready var step_time: Timer = $stepTime
 
+#@onready var sfx_player: AudioStreamPlayer2D = $SFXPlayer2D
+@onready var sfx_player: AudioStreamPlayer2D = $Node/SFXPlayer2D
 
-const SPEED = 9.0
+const SPEED = 12.0
 const STEP_SPEED = 68.0
 const JUMP_VELOCITY = 4.5
 
 #dont feel like using them yet
 enum MoveStates {IDLE, MOVING, DASH}
 enum AttackStates {ATTACK, GRAPPLE, SLINGSHOT}
-
 
 
 var canDash: bool = true
@@ -40,7 +41,7 @@ func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-
+	
 	# Handle jump.
 	#if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		#velocity.y = JUMP_VELOCITY
@@ -65,22 +66,45 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
-
+	
 	move_and_slide()
 
-func do_big_step(direction: Vector3) -> void:
+func do_big_step(direction: Vector3)->void:
 	#if !canDash: return
-	
 	# ============== DASHING LOGIC ==============
-	
 	
 	canDash = false
 	
 	
-	
 	if step_time.is_stopped():
+		var sfx_step :AudioStreamPlayer= SoundPlayer.play_sound(AssetsList.SFX_DASH)
+		
+		
+		#sfx_step..connect(func()->void: )
+		
+		#if !step_time.timeout.has_connections():
+		#step_time.timeout.connect(func()->void:
+			##sfx_step.stop()
+			#if is_instance_valid(sfx_step):
+				#sfx_step.call_deferred("free")
+			#isDashing= false
+			#step_cooldown.start()
+		#)
+		
+		add_child(sfx_step)
+		sfx_step.play()
+		
 		step_time.start()
-		step_time.timeout.connect(func()->void: isDashing= false; step_cooldown.start())
+		
+		await step_time.timeout
+		
+		if is_instance_valid(sfx_step):
+			sfx_step.call_deferred("free")
+		isDashing= false
+		step_cooldown.start()
+		#sfx_player.stream = AssetsList.SFX_DASH
+		#sfx_player.play()
+	
 	
 	if !direction:
 		print("no direction")
@@ -92,12 +116,7 @@ func do_big_step(direction: Vector3) -> void:
 	
 	var dashSpeed : float = STEP_SPEED * dashCurve.sample(offset)
 	
-	
-	
 	velocity = direction * dashSpeed
-	
-	
-	
 	
 	
 	move_and_slide()

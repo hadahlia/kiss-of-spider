@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://culh51bwi8tkb"]
 
 [ext_resource type="Script" uid="uid://cb4wo7w0e7yj5" path="res://scenes/entity/player_controls.gd" id="1_yo1yh"]
+[ext_resource type="AudioStream" uid="uid://xbaxqtaxebcl" path="res://sounds/sfx/dash.wav" id="2_ldfsx"]
 
 [sub_resource type="Curve" id="Curve_yo1yh"]
 _data = [Vector2(0, 0), 0.0, 1.4, 0, 0, Vector2(0.74548733, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.42838097), 0.0, 0.0, 0, 0]
@@ -17,6 +18,8 @@ metallic_specular = 1.0
 material = SubResource("StandardMaterial3D_fqy02")
 
 [node name="empress" type="CharacterBody3D" unique_id=191184070]
+collision_layer = 9
+collision_mask = 9
 script = ExtResource("1_yo1yh")
 dashCurve = SubResource("Curve_yo1yh")
 
@@ -35,3 +38,13 @@ one_shot = true
 [node name="stepTime" type="Timer" parent="." unique_id=151191174]
 wait_time = 0.22
 one_shot = true
+
+[node name="SFXPlayer" type="AudioStreamPlayer3D" parent="." unique_id=16122828]
+unit_size = 1000.0
+max_polyphony = 3
+
+[node name="Node" type="Node" parent="." unique_id=2042556825]
+
+[node name="SFXPlayer2D" type="AudioStreamPlayer2D" parent="Node" unique_id=1318887708]
+stream = ExtResource("2_ldfsx")
+max_polyphony = 3
