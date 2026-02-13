@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cb4wo7w0e7yj5" path="res://scenes/entity/player_controls.gd" id="1_yo1yh"]
 [ext_resource type="AudioStream" uid="uid://xbaxqtaxebcl" path="res://sounds/sfx/dash.wav" id="2_ldfsx"]
+[ext_resource type="Script" uid="uid://c6abwchn5513e" path="res://scenes/entity/cursortest.gd" id="3_i6wdd"]
 
 [sub_resource type="Curve" id="Curve_yo1yh"]
 _data = [Vector2(0, 0), 0.0, 1.4, 0, 0, Vector2(0.74548733, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.42838097), 0.0, 0.0, 0, 0]
@@ -80,3 +81,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 
 [node name="cursortest" type="MeshInstance3D" parent="." unique_id=277534446]
 mesh = SubResource("BoxMesh_i6wdd")
+script = ExtResource("3_i6wdd")

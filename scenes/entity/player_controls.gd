@@ -40,10 +40,14 @@ var input_dir : Vector2
 
 var last_result : Vector3
 
+
+#@onready var cursortest: MeshInstance3D = $cursortest
+
 func _ready() -> void:
 	step_cooldown.timeout.connect(on_steptimer_timeout)
 	atk_cooldown.timeout.connect(_on_atk_timeout)
 	
+	#cursortest.reparent(get_parent())
 
 func _input(event: InputEvent) -> void:
 	
@@ -64,10 +68,14 @@ func _input(event: InputEvent) -> void:
 			isDashing = true
 		
 
-func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
-		GameGlobals.cursor_pos_viewport = event.position
-		
+#func _unhandled_input(event: InputEvent) -> void:
+	#if event is InputEventMouseMotion:
+		#GameGlobals.cursor_pos_viewport = event.position
+
+
+func _process(delta: float) -> void:
+	GameGlobals.cursor_pos_viewport = get_viewport().get_mouse_position()
+	#pass
 
 func _physics_process(delta: float) -> void:
 	# raycast
@@ -83,7 +91,7 @@ func _physics_process(delta: float) -> void:
 		#print("YEAHHHH")
 		GameGlobals.cursor_pos_3d = result.position
 	
-	$cursortest.global_position = GameGlobals.cursor_pos_3d
+	#cursortest.
 	
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -128,7 +136,13 @@ func do_big_step(direction: Vector3)->void:
 	#if !canDash: return
 	# ============== DASHING LOGIC ==============
 	
+	if !direction:
+		#print("no direction")
+		direction = (GameGlobals.cursor_pos_3d - global_position).normalized()
+		#return
+	
 	canDash = false
+	
 	
 	
 	if step_time.is_stopped():
@@ -161,9 +175,7 @@ func do_big_step(direction: Vector3)->void:
 		#sfx_player.play()
 	
 	
-	if !direction:
-		print("no direction")
-		return
+	
 	
 	var offset : float = (step_time.wait_time - step_time.time_left) / step_time.wait_time
 	
