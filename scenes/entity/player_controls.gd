@@ -1,12 +1,22 @@
 extends CharacterBody3D
 
+
+
 @export var dashCurve : Curve
 
 @export var camera: Camera3D
 
 
+# should face the cursor
+@onready var attack_pivot: Node3D = $attack_pivot
+
+# attack point
+@onready var attack_point: Marker3D = $attack_pivot/attack_point
+
+# TIMERS
 @onready var step_cooldown: Timer = $stepCooldown
 @onready var step_time: Timer = $stepTime
+@onready var atk_cooldown: Timer = $atk_cooldown
 
 #@onready var sfx_player: AudioStreamPlayer2D = $SFXPlayer2D
 @onready var sfx_player: AudioStreamPlayer2D = $Node/SFXPlayer2D
@@ -15,21 +25,38 @@ const SPEED = 12.0
 const STEP_SPEED = 68.0
 const JUMP_VELOCITY = 4.5
 
+const RAYCAST_LEN : float = 10000
+
 #dont feel like using them yet
 enum MoveStates {IDLE, MOVING, DASH}
 enum AttackStates {ATTACK, GRAPPLE, SLINGSHOT}
 
-
+var canAttack: bool = true
 var canDash: bool = true
 
 var isDashing: bool = false
 
 var input_dir : Vector2
 
+var last_result : Vector3
+
 func _ready() -> void:
 	step_cooldown.timeout.connect(on_steptimer_timeout)
+	atk_cooldown.timeout.connect(_on_atk_timeout)
+	
 
 func _input(event: InputEvent) -> void:
+	
+	
+	
+	
+	if Input.is_action_pressed("slash"):
+		
+		do_attack()
+	
+	if Input.is_action_just_pressed("grapple"):
+		print("do grapple!")
+		SoundPlayer.play_sound2(AssetsList.ATTACK2)
 	
 	
 	if Input.is_action_just_pressed("bigstep"):
@@ -37,24 +64,37 @@ func _input(event: InputEvent) -> void:
 			isDashing = true
 		
 
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion:
+		GameGlobals.cursor_pos_viewport = event.position
+		
+
 func _physics_process(delta: float) -> void:
-	# Add the gravity.
+	# raycast
+	var space_state = get_world_3d().direct_space_state
+	var from: = camera.project_ray_origin(GameGlobals.cursor_pos_viewport)
+	var to := from + camera.project_ray_normal(GameGlobals.cursor_pos_viewport) * RAYCAST_LEN
+	
+	var query = PhysicsRayQueryParameters3D.create(from, to)
+	var result = space_state.intersect_ray(query)
+	
+	
+	if result:
+		#print("YEAHHHH")
+		GameGlobals.cursor_pos_3d = result.position
+	
+	$cursortest.global_position = GameGlobals.cursor_pos_3d
+	
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	
-	# Handle jump.
-	#if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		#velocity.y = JUMP_VELOCITY
-		
+	
 	var direction := (Vector3(input_dir.x, 0, input_dir.y)).normalized().rotated(Vector3.UP, deg_to_rad(45))
 	
 	if isDashing:
 		do_big_step(direction)
 		return
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	#var input_x := Input.get_axis("move_a", "move_d")
-	#var input_y := Input.get_axis("move_w", "move_s")
+	
 	input_dir = Input.get_vector("move_a", "move_d", "move_w", "move_s")
 	#var direction := (camera.global_basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
@@ -68,6 +108,21 @@ func _physics_process(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 	
 	move_and_slide()
+
+func do_attack()->void:
+	if !canAttack: return
+	
+	attack_pivot.look_at(GameGlobals.cursor_pos_3d)
+	
+	var atk = AssetsList.PLAYER_ATK.instantiate()
+	add_child(atk)
+	atk.global_position = attack_point.global_position
+	
+	#print("do attack!!!")
+	SoundPlayer.play_sound2(AssetsList.ATTACK1)
+	
+	canAttack = false
+	atk_cooldown.start()
 
 func do_big_step(direction: Vector3)->void:
 	#if !canDash: return
@@ -120,6 +175,9 @@ func do_big_step(direction: Vector3)->void:
 	
 	
 	move_and_slide()
+
+func _on_atk_timeout():
+	canAttack=true
 
 func on_steptimer_timeout():
 	canDash = true

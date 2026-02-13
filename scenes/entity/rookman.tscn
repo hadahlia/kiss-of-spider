@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://c4788n83007rf"]
 
+[ext_resource type="Script" uid="uid://e5ojvwewp5gd" path="res://scenes/entity/general_ai_script.gd" id="1_2ifh5"]
 [ext_resource type="Material" uid="uid://is0xfw5jbycn" path="res://materials/rook_blue.tres" id="1_cixyw"]
+[ext_resource type="PackedScene" uid="uid://dtbqu6cww4fni" path="res://scenes/entity/thought_bubble_scene.tscn" id="3_kmhih"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ibr5i"]
 
@@ -16,7 +18,13 @@ height = 1.09
 [sub_resource type="SphereShape3D" id="SphereShape3D_cixyw"]
 radius = 0.8
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_kmhih"]
+viewport_path = NodePath("SubViewport")
+
 [node name="rookman" type="CharacterBody3D" unique_id=1860973982]
+collision_layer = 9
+collision_mask = 9
+script = ExtResource("1_2ifh5")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=775176458]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -31,8 +39,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 mesh = SubResource("CylinderMesh_kmhih")
 
 [node name="HURTBOX" type="Area3D" parent="." unique_id=1516649644]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HURTBOX" unique_id=511449502]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 shape = SubResource("SphereShape3D_cixyw")
 debug_color = Color(0.6755251, 0.09619702, 0.28819114, 0.41960785)
+
+[node name="ThoughtBubbleScene" parent="." unique_id=2061851949 instance=ExtResource("3_kmhih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+visible = false
+texture = SubResource("ViewportTexture_kmhih")

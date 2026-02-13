@@ -10,12 +10,21 @@ point_count = 3
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fqy02"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fqy02"]
-albedo_color = Color(0.20392157, 0.21176471, 0.23921569, 1)
+albedo_color = Color(0.83, 0.074699976, 0.28870162, 1)
 metallic = 1.0
 metallic_specular = 1.0
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_yo1yh"]
 material = SubResource("StandardMaterial3D_fqy02")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ldfsx"]
+radius = 0.8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ldfsx"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_i6wdd"]
+material = SubResource("StandardMaterial3D_ldfsx")
+size = Vector3(0.5, 0.5, 0.5)
 
 [node name="empress" type="CharacterBody3D" unique_id=191184070]
 collision_layer = 9
@@ -30,6 +39,10 @@ shape = SubResource("CapsuleShape3D_fqy02")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=801258340]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_yo1yh")
+
+[node name="atk_cooldown" type="Timer" parent="." unique_id=1207879065]
+wait_time = 0.25
+one_shot = true
 
 [node name="stepCooldown" type="Timer" parent="." unique_id=107683400]
 wait_time = 0.15
@@ -48,3 +61,22 @@ max_polyphony = 3
 [node name="SFXPlayer2D" type="AudioStreamPlayer2D" parent="Node" unique_id=1318887708]
 stream = ExtResource("2_ldfsx")
 max_polyphony = 3
+
+[node name="HURTBOX" type="Area3D" parent="." unique_id=342416245]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HURTBOX" unique_id=952371015]
+shape = SubResource("SphereShape3D_ldfsx")
+debug_color = Color(0.97, 0.19658665, 0.07759999, 0.41960785)
+
+[node name="attack_pivot" type="Node3D" parent="." unique_id=262385676]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="attack_point" type="Marker3D" parent="attack_pivot" unique_id=1236050409]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+
+[node name="cursortest" type="MeshInstance3D" parent="." unique_id=277534446]
+mesh = SubResource("BoxMesh_i6wdd")

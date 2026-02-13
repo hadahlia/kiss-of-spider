@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://ei28n7toi7ip"]
+
+[ext_resource type="Script" uid="uid://df7qww7e0poay" path="res://scripts/fung_attack.gd" id="1_754af"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d52w4"]
+specular_mode = 1
+albedo_color = Color(0.53, 0, 0, 1)
+emission_enabled = true
+emission = Color(0, 0, 0.49019608, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_754af"]
+material = SubResource("StandardMaterial3D_d52w4")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_d52w4"]
+
+[node name="fung_attack" type="Node3D" unique_id=1143261157]
+script = ExtResource("1_754af")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=574671271]
+mesh = SubResource("SphereMesh_754af")
+
+[node name="HIT" type="Area3D" parent="." unique_id=980295345]
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HIT" unique_id=1817598764]
+shape = SubResource("SphereShape3D_d52w4")
+debug_color = Color(0.26436046, 0.62708706, 0.2724732, 0.41960785)
+
+[node name="atk_time" type="Timer" parent="." unique_id=1209629681]
+wait_time = 0.25
+one_shot = true
+autostart = true

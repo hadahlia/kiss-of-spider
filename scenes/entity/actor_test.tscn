@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://fq4c0rac2cej"]
+
+[ext_resource type="PackedScene" uid="uid://dtbqu6cww4fni" path="res://scenes/entity/thought_bubble_scene.tscn" id="1_gwvmn"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_2uv6i"]
+viewport_path = NodePath("SubViewport")
+
+[node name="test_actor" type="Node3D" unique_id=1746748093]
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=952727595]
+transform = Transform3D(1, 0, 0, 0, 0.9570112, 0.29005083, 0, -0.29005083, 0.9570112, 0, 3.293964, 11.420258)
+
+[node name="ThoughtBubbleScene" parent="." unique_id=2061851949 instance=ExtResource("1_gwvmn")]
+texture = SubResource("ViewportTexture_2uv6i")

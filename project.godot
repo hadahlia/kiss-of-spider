@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 
 SoundPlayer="*uid://dj4y5tlhqqqd4"
 AssetsList="*uid://c6uro7k4qb1ga"
+GameGlobals="*uid://colkbobtlap55"
 
 [display]
 
@@ -110,9 +111,11 @@ bigstep={
 
 [layer_names]
 
+3d_physics/layer_1="FLOOR"
 3d_physics/layer_2="HURT ENEMY"
 3d_physics/layer_3="HURT PLAYER"
 3d_physics/layer_4="WORLD"
+3d_physics/layer_8="DASHABLE"
 
 [physics]
 
