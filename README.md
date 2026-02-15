@@ -10,4 +10,3 @@ https://godotshaders.com/shader/double-dither-stylized-transparency-shadows-retr
 fonts
 https://arcade.itch.io/gelatin-mono-ttf
 https://ggbot.itch.io/datcub-font
-https://moxica.itch.io/fonts-digital-clock
