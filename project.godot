@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="rot_jam"
-run/main_scene="uid://8uh7o2d0n413"
+run/main_scene="uid://b4xme2l8v8w5l"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 run/max_fps=300
 config/icon="res://icon.svg"
@@ -24,8 +24,9 @@ GameGlobals="*uid://colkbobtlap55"
 
 [display]
 
-window/stretch/mode="viewport"
-window/stretch/aspect="keep_height"
+window/size/viewport_width=720
+window/size/viewport_height=480
+window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
@@ -35,6 +36,7 @@ enabled=PackedStringArray("res://addons/MarchingSquaresTerrain/plugin.cfg")
 
 folder_colors={
 "res://addons/": "gray",
+"res://font/": "teal",
 "res://img/": "yellow",
 "res://materials/": "pink",
 "res://scenes/": "purple",

@@ -1,0 +1,105 @@
+[gd_scene format=3 uid="uid://b4xme2l8v8w5l"]
+
+[ext_resource type="Theme" uid="uid://daclpn8t8vyor" path="res://materials/gelatin_mono.tres" id="1_grvlt"]
+[ext_resource type="Script" uid="uid://bl6q7mmj1vr3w" path="res://scenes/alt/girlspace.gd" id="1_lklr1"]
+
+[node name="girlspace" type="Control" unique_id=1910344288]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lklr1")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=681462580]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.008166675, 0.07, 1)
+
+[node name="EnemyTable" type="PanelContainer" parent="." unique_id=800806561]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -372.0
+offset_top = -226.0
+offset_right = -20.0
+offset_bottom = 82.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="StatusBox" type="PanelContainer" parent="." unique_id=1400587337]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -347.0
+offset_top = -177.0
+offset_right = -19.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("1_grvlt")
+
+[node name="VBox" type="VBoxContainer" parent="StatusBox" unique_id=1567337505]
+layout_mode = 2
+alignment = 2
+
+[node name="StatusText" type="RichTextLabel" parent="StatusBox/VBox" unique_id=15745609]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/normal_font_size = 22
+text = "you dealt a lot of damage to that guy...
+ whats wrong with you.
+well anyway im off to the store
+you want anything?"
+scroll_following = true
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="LineEdit" type="LineEdit" parent="StatusBox/VBox" unique_id=655006817]
+layout_mode = 2
+size_flags_vertical = 8
+placeholder_text = "command..."
+max_length = 30
+keep_editing_on_text_submit = true
+context_menu_enabled = false
+emoji_menu_enabled = false
+selecting_enabled = false
+deselect_on_focus_loss_enabled = false
+
+[node name="MarginContainer" type="MarginContainer" parent="StatusBox" unique_id=1265216717]
+layout_mode = 2
+
+[node name="TimerLabel" type="Label" parent="." unique_id=1383520618]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 284.0
+offset_bottom = 50.0
+theme = ExtResource("1_grvlt")
+theme_override_font_sizes/font_size = 31
+text = "TIME: PLACEHOLDER"
+
+[node name="ColorRect2" type="ColorRect" parent="." unique_id=404547193]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 160.0
+offset_top = -92.0
+offset_right = 200.0
+offset_bottom = -52.0
+grow_vertical = 2
+rotation = 0.72082096
+
+[connection signal="text_submitted" from="StatusBox/VBox/LineEdit" to="." method="_on_line_submission"]
