@@ -16,6 +16,10 @@ config/features=PackedStringArray("4.6", "GL Compatibility")
 run/max_fps=300
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="uid://dhn654chhx000"
+
 [autoload]
 
 SoundPlayer="*uid://dj4y5tlhqqqd4"
@@ -39,6 +43,7 @@ folder_colors={
 "res://font/": "teal",
 "res://img/": "yellow",
 "res://materials/": "pink",
+"res://resources/": "red",
 "res://scenes/": "purple",
 "res://scenes/entity/": "red",
 "res://scripts/": "blue",

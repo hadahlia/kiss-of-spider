@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://bw2pryounr66b"]
+
+[ext_resource type="Script" uid="uid://ba5asn6mttm3c" path="res://scripts/alt/ability_data.gd" id="1_e4x65"]
+[ext_resource type="Texture2D" uid="uid://bvn88ao6qm4v0" path="res://materials/default_ability_icon.tres" id="1_r5dvk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c8afo"]
+bg_color = Color(0, 0, 0, 0.22352941)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5mdao"]
+bg_color = Color(0.6, 0.6, 0.6, 0.24313726)
+
+[node name="AbilityData" type="VBoxContainer" unique_id=495986461]
+theme_override_constants/separation = -2
+script = ExtResource("1_e4x65")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=340127572]
+layout_mode = 2
+
+[node name="move_icon" type="TextureRect" parent="HBoxContainer" unique_id=1263124046]
+layout_mode = 2
+texture = ExtResource("1_r5dvk")
+
+[node name="ability_name" type="Label" parent="HBoxContainer" unique_id=1491247862]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Scrape"
+
+[node name="ability_cooldown" type="ProgressBar" parent="HBoxContainer/ability_name" unique_id=1045820906]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.48800004
+anchor_top = -0.067
+anchor_right = 0.9760001
+anchor_bottom = 2.4
+offset_left = 0.0080013275
+offset_top = 0.004999995
+offset_right = -0.016002655
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_c8afo")
+theme_override_styles/fill = SubResource("StyleBoxFlat_5mdao")
+value = 50.0
+rounded = true
+fill_mode = 1
+show_percentage = false
+
+[node name="ability_info" type="Label" parent="." unique_id=985293591]
+layout_mode = 2
+theme_override_constants/line_spacing = -2
+theme_override_font_sizes/font_size = 16
+text = "POW 3
+t 5s"
+horizontal_alignment = 2

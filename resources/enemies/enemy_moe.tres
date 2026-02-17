@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EnemyParams" format=3 uid="uid://dkld0mkglxfcy"]
+
+[ext_resource type="Script" uid="uid://bweywgc1qqmno" path="res://resources/enemy_def.gd" id="1_co8r0"]
+[ext_resource type="Texture2D" uid="uid://djjhvnib11cg2" path="res://materials/default_enemy.tres" id="1_x05rt"]
+
+[resource]
+script = ExtResource("1_co8r0")
+name = "MOE"
+speed = 5.0
+metadata/_custom_type_script = "uid://bweywgc1qqmno"

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="AbilityParams" format=3 uid="uid://dvofobtsnx63a"]
+
+[ext_resource type="Texture2D" uid="uid://bvn88ao6qm4v0" path="res://materials/default_ability_icon.tres" id="1_7aiy1"]
+[ext_resource type="Script" uid="uid://dw5uq68fhmemi" path="res://resources/ability_def.gd" id="1_78byc"]
+
+[resource]
+script = ExtResource("1_78byc")
+metadata/_custom_type_script = "uid://dw5uq68fhmemi"
