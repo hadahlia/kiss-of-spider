@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://7u8fyqjcvwjl"]
+
+[ext_resource type="Script" uid="uid://dvbdo7nrvhk6l" path="res://scenes/alt/spin_girl.gd" id="1_7q24l"]
+[ext_resource type="PackedScene" uid="uid://qnv7edk8nwwo" path="res://models/dizzygirl.tscn" id="1_gqjwe"]
+
+[sub_resource type="Environment" id="Environment_gqjwe"]
+background_mode = 1
+
+[node name="dizzy_woman" type="Node3D" unique_id=352445960]
+script = ExtResource("1_7q24l")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=616187690]
+transform = Transform3D(0.7071068, 0, 0.7071068, 0, 1, 0, -0.7071068, 0, 0.7071068, 0.7, 0, 0.8)
+
+[node name="redoll_2_rigged" parent="." unique_id=1429037761 instance=ExtResource("1_gqjwe")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1784520682]
+environment = SubResource("Environment_gqjwe")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1491698777]
+transform = Transform3D(0.9659258, 0.066987306, -0.25, 0, 0.9659259, 0.25881907, 0.25881904, -0.25000003, 0.93301266, 0, -0.1, 5)
+light_energy = 2.1
+light_indirect_energy = 0.0
+light_volumetric_fog_energy = 0.0
+sky_mode = 1
+
+[node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=687004776]
+transform = Transform3D(0.86602545, 0, -0.5, 0, 1, 0, 0.5, 0, 0.86602545, -2.3, 0, 4)
+light_color = Color(4.5256257, 4.5410233, 4.987538, 1)
+spot_range = 7.0
+spot_angle = 14.961151

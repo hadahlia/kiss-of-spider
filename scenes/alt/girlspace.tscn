@@ -2,7 +2,9 @@
 
 [ext_resource type="Theme" uid="uid://daclpn8t8vyor" path="res://materials/gelatin_mono.tres" id="1_grvlt"]
 [ext_resource type="Script" uid="uid://bl6q7mmj1vr3w" path="res://scenes/alt/girlspace.gd" id="1_lklr1"]
+[ext_resource type="Script" uid="uid://bmt31qefh1c8d" path="res://scenes/alt/spawn_system.gd" id="2_8rero"]
 [ext_resource type="StyleBox" uid="uid://bcianbqta1q76" path="res://materials/base_panelstyle.tres" id="2_ai2b7"]
+[ext_resource type="PackedScene" uid="uid://7u8fyqjcvwjl" path="res://scenes/alt/spin_girl.tscn" id="2_mfurw"]
 [ext_resource type="Shader" uid="uid://ck5sbl2yksb7d" path="res://scenes/alt/crt.gdshader" id="2_v3l75"]
 [ext_resource type="Theme" uid="uid://wxgbgt8qnmtb" path="res://materials/datcub_instructions.tres" id="3_1cq7x"]
 [ext_resource type="Texture2D" uid="uid://bc08chg5qe8qy" path="res://img/ui/omega_red.png" id="3_c8afo"]
@@ -11,19 +13,14 @@
 [ext_resource type="PackedScene" uid="uid://bw2pryounr66b" path="res://scenes/alt/ability_data.tscn" id="6_5mdao"]
 [ext_resource type="Resource" uid="uid://cnqw1vjpfht3t" path="res://resources/abilities/ability_scrape.tres" id="7_tsibi"]
 [ext_resource type="AudioStream" uid="uid://bglit84hpsej8" path="res://sounds/music/bmtl_slurm_loop.mp3" id="9_5mdao"]
+[ext_resource type="Script" uid="uid://drr4t8sowdksx" path="res://scenes/alt/what.gd" id="10_dp30q"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_v3l75"]
-viewport_path = NodePath("SubViewportContainer/SubViewport")
+[sub_resource type="Curve" id="Curve_8rero"]
+_data = [Vector2(0, 0.026946187), 0.0, 0.0, 0, 0, Vector2(0.46492985, 0.2215569), 0.0, 0.0, 0, 0, Vector2(0.741483, 0.7129491), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 4
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dp30q"]
-resource_local_to_scene = true
-shader = ExtResource("2_v3l75")
-shader_parameter/tex = SubResource("ViewportTexture_v3l75")
-shader_parameter/mask_type = 5
-shader_parameter/curve = 0.0400000019
-shader_parameter/color_offset = 0.1000000285
-shader_parameter/mask_brightness = 1.0
-shader_parameter/aspect = 0.75
+[sub_resource type="ViewportTexture" id="ViewportTexture_mfurw"]
+viewport_path = NodePath("SubViewportContainer/SubViewport/SubViewport")
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_c8afo"]
 blend_mode = 1
@@ -39,6 +36,19 @@ blend_mode = 1
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_tsibi"]
 blend_mode = 1
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_v3l75"]
+viewport_path = NodePath("SubViewportContainer/SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dp30q"]
+resource_local_to_scene = true
+shader = ExtResource("2_v3l75")
+shader_parameter/tex = SubResource("ViewportTexture_v3l75")
+shader_parameter/mask_type = 5
+shader_parameter/curve = 0.0400000019
+shader_parameter/color_offset = 0.1000000285
+shader_parameter/mask_brightness = 1.0
+shader_parameter/aspect = 0.75
 
 [sub_resource type="Environment" id="Environment_1cq7x"]
 background_mode = 3
@@ -56,17 +66,29 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_lklr1")
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=26375848]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="spawn_system" type="Node" parent="." unique_id=1931520733]
+script = ExtResource("2_8rero")
+difficulty_curve = SubResource("Curve_8rero")
 
-[node name="CRT" type="ColorRect" parent="SubViewportContainer" unique_id=654628407]
-material = SubResource("ShaderMaterial_dp30q")
-layout_mode = 2
+[node name="SpawnTimer" type="Timer" parent="spawn_system" unique_id=1217757632]
+wait_time = 10.0
+autostart = true
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=26375848]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1973959542]
-size = Vector2i(720, 480)
+handle_input_locally = false
+size = Vector2i(860, 640)
+size_2d_override = Vector2i(720, 480)
+size_2d_override_stretch = true
+render_target_update_mode = 4
 
 [node name="ColorRect" type="ColorRect" parent="SubViewportContainer/SubViewport" unique_id=681462580]
 anchors_preset = 15
@@ -75,6 +97,21 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.08, 0.0464, 0.0352, 1)
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer/SubViewport" unique_id=104041464]
+own_world_3d = true
+transparent_bg = true
+size = Vector2i(256, 256)
+
+[node name="dizzy_woman" parent="SubViewportContainer/SubViewport/SubViewport" unique_id=352445960 instance=ExtResource("2_mfurw")]
+
+[node name="spin_girl_tex" type="TextureRect" parent="SubViewportContainer/SubViewport" unique_id=1786100602]
+offset_left = 34.325584
+offset_top = 49.25
+offset_right = 318.97678
+offset_bottom = 305.25
+texture = SubResource("ViewportTexture_mfurw")
+stretch_mode = 2
 
 [node name="EnemyTable" type="PanelContainer" parent="SubViewportContainer/SubViewport" unique_id=800806561]
 anchors_preset = 6
@@ -373,7 +410,17 @@ theme = ExtResource("1_grvlt")
 theme_override_font_sizes/font_size = 31
 text = "TIME: PLACEHOLDER"
 
+[node name="DLabel" type="Label" parent="SubViewportContainer/SubViewport" unique_id=1033337063]
+offset_left = 18.418606
+offset_top = 41.25
+offset_right = 286.4186
+offset_bottom = 75.25
+theme = ExtResource("1_grvlt")
+theme_override_font_sizes/font_size = 31
+text = "D: unk"
+
 [node name="ColorRect2" type="ColorRect" parent="SubViewportContainer/SubViewport" unique_id=404547193]
+visible = false
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
@@ -383,6 +430,150 @@ offset_right = 200.0
 offset_bottom = -52.0
 grow_vertical = 2
 rotation = 0.72082096
+
+[node name="what" type="Control" parent="SubViewportContainer/SubViewport" unique_id=1877008368]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_grvlt")
+script = ExtResource("10_dp30q")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SubViewportContainer/SubViewport/what" unique_id=514584861]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0.93750006, 1, 0.25, 1)
+theme_override_font_sizes/normal_font_size = 56
+text = "im so tired. i dont know anymore. im so repressed. rigid. be more fluid. who am i. what do i want. what is this game for anymore. what do you need. what do i need. who am i. who are you. insects. why. the self. pour myself in. the bot. boiling roaches. im a bug in the pot./ where are we going who am i whoa m i who am i whoami whoami woami whoami"
+fit_content = true
+horizontal_alignment = 3
+
+[node name="blackout" type="ColorRect" parent="SubViewportContainer/SubViewport/what" unique_id=2076155644]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0013999987, 0.033413336, 0.07, 1)
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="SubViewportContainer/SubViewport/what" unique_id=370924157]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 42
+text = "I HAVE NO EYES
+
+
+
+
+
+
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="SubViewportContainer/SubViewport/what" unique_id=443582814]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 42
+text = "
+
+
+AND YET
+
+
+
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RichTextLabel4" type="RichTextLabel" parent="SubViewportContainer/SubViewport/what" unique_id=1722109023]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 42
+text = "
+
+
+
+
+
+
+AND YET
+
+
+
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RichTextLabel5" type="RichTextLabel" parent="SubViewportContainer/SubViewport/what" unique_id=524260813]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 42
+text = "
+
+
+
+
+
+
+
+
+I WILL MEET GOD
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="blackout2" type="ColorRect" parent="SubViewportContainer/SubViewport/what" unique_id=1530673001]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.07, 0.0013999987, 0.0013999987, 1)
+
+[node name="RichTextLabel6" type="RichTextLabel" parent="SubViewportContainer/SubViewport/what" unique_id=817998827]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "I ALWAYS WANTED TO BE REAL"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CRT" type="ColorRect" parent="." unique_id=654628407]
+material = SubResource("ShaderMaterial_dp30q")
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Inventory" type="Node" parent="." unique_id=1665850782]
 

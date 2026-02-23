@@ -1,0 +1,155 @@
+[gd_scene format=3 uid="uid://qnv7edk8nwwo"]
+
+[ext_resource type="PackedScene" uid="uid://cu514kur1alne" path="res://models/redoll_2_rigged.glb" id="1_qcwkr"]
+[ext_resource type="Material" uid="uid://s8pevt2q1fd8" path="res://materials/mia_materia.tres" id="2_b7gi3"]
+
+[node name="redoll_2_rigged" unique_id=1429037761 instance=ExtResource("1_qcwkr")]
+
+[node name="calf_002" parent="." index="0" unique_id=1872740130]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_b7gi3")
+surface_material_override/1 = ExtResource("2_b7gi3")
+
+[node name="chest_002" parent="." index="1" unique_id=798233283]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_b7gi3")
+surface_material_override/1 = ExtResource("2_b7gi3")
+
+[node name="clavicleKnot_002" parent="." index="2" unique_id=937695040]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_b7gi3")
+surface_material_override/1 = ExtResource("2_b7gi3")
+
+[node name="elbow_002" parent="." index="3" unique_id=136415269]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_b7gi3")
+surface_material_override/1 = ExtResource("2_b7gi3")
+
+[node name="foot_002" parent="." index="4" unique_id=468652178]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_b7gi3")
+surface_material_override/1 = ExtResource("2_b7gi3")
+
+[node name="foreArm_002" parent="." index="5" unique_id=1542503838]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_b7gi3")
+surface_material_override/1 = ExtResource("2_b7gi3")
+
+[node name="forearmKnot_002" parent="." index="6" unique_id=2124036316]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_b7gi3")
+surface_material_override/1 = ExtResource("2_b7gi3")
+
+[node name="head_002" parent="." index="7" unique_id=533378458]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_b7gi3")
+surface_material_override/1 = ExtResource("2_b7gi3")
+
+[node name="hip_002" parent="." index="8" unique_id=617187997]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_b7gi3")
+surface_material_override/1 = ExtResource("2_b7gi3")
+
+[node name="inderMid_002" parent="." index="9" unique_id=23521909]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_b7gi3")
+
+[node name="indexKnot_002" parent="." index="10" unique_id=847040113]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_b7gi3")
+
+[node name="indexRoot_002" parent="." index="11" unique_id=1714231473]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_b7gi3")
+
+[node name="indexTip_002" parent="." index="12" unique_id=1298055066]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_b7gi3")
+
+[node name="knee_002" parent="." index="13" unique_id=117229738]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_b7gi3")
+
+[node name="middleKnot_002" parent="." index="14" unique_id=1921738766]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_b7gi3")
+
+[node name="middleMid_002" parent="." index="15" unique_id=1186080604]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_b7gi3")
+
+[node name="middleRoot_002" parent="." index="16" unique_id=2002411352]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_b7gi3")
+
+[node name="middleTip_002" parent="." index="17" unique_id=340867487]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_b7gi3")
+
+[node name="palm_002" parent="." index="18" unique_id=1645921993]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_b7gi3")
+
+[node name="pinkyKnot_002" parent="." index="19" unique_id=1422289393]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_b7gi3")
+
+[node name="pinkyMid_002" parent="." index="20" unique_id=342535623]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_b7gi3")
+
+[node name="pinkyRoot_002" parent="." index="21" unique_id=1038244927]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_b7gi3")
+
+[node name="pinkyTip_002" parent="." index="22" unique_id=2124311124]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_b7gi3")
+
+[node name="ringKnot_002" parent="." index="23" unique_id=1305729803]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_b7gi3")
+
+[node name="ringMid_002" parent="." index="24" unique_id=347081454]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_b7gi3")
+
+[node name="ringRoot_002" parent="." index="25" unique_id=2098483406]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_b7gi3")
+
+[node name="ringTip_002" parent="." index="26" unique_id=809370388]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_b7gi3")
+
+[node name="shoulder_002" parent="." index="27" unique_id=1796042353]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_b7gi3")
+
+[node name="thumbMid_002" parent="." index="28" unique_id=2116805092]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_b7gi3")
+
+[node name="thumbRoot_002" parent="." index="29" unique_id=643818930]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_b7gi3")
+
+[node name="thumbTip_002" parent="." index="30" unique_id=1918792019]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_b7gi3")
+
+[node name="thunbKnot_002" parent="." index="31" unique_id=2106536410]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_b7gi3")
+
+[node name="tight_002" parent="." index="32" unique_id=759310418]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_b7gi3")
+
+[node name="upperArm_002" parent="." index="33" unique_id=59379286]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_b7gi3")
+
+[node name="waist_003" parent="." index="34" unique_id=324101386]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+surface_material_override/0 = ExtResource("2_b7gi3")

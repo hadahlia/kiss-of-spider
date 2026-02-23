@@ -1,30 +1,35 @@
 extends Control
 
 # PLAYER STATS
+
 var max_health: int
 var player_health: int = 20
 #var player_position:= Vector3.ZERO
-@onready var hp_bar: ProgressBar = $HPBar
-@onready var health_label: Label = $HPBar/health_label
+@onready var hp_bar: ProgressBar = $SubViewportContainer/SubViewport/HPBar
+@onready var health_label: Label = $SubViewportContainer/SubViewport/HPBar/health_label
 
-@onready var level: Label = $ExpBar/level
-@onready var exp_progress: Label = $ExpBar/exp_progress
+@onready var level: Label = $SubViewportContainer/SubViewport/ExpBar/level
+@onready var exp_progress: Label = $SubViewportContainer/SubViewport/ExpBar/exp_progress
 
 
-@onready var status_text: RichTextLabel = $StatusBox/VBox/StatusText
-@onready var line_edit: LineEdit = $StatusBox/VBox/LineEdit
+@onready var status_text: RichTextLabel = $SubViewportContainer/SubViewport/StatusBox/VBox/StatusText
+@onready var line_edit: LineEdit = $SubViewportContainer/SubViewport/StatusBox/VBox/LineEdit
 
-@onready var timer_label: Label = $TimerLabel
+@onready var timer_label: Label = $SubViewportContainer/SubViewport/TimerLabel
+@onready var d_label: Label = $SubViewportContainer/SubViewport/DLabel
 
 var god_time : float = 0
-
+#var dtime: float 
 
 @onready var inventory: Node = $Inventory
 @onready var enemies: Node = $Enemies
 
-@onready var enemy_grid: GridContainer = $EnemyTable/HBoxContainer/VBoxContainer/GridContainer
+@onready var enemy_grid: GridContainer = $SubViewportContainer/SubViewport/EnemyTable/HBoxContainer/VBoxContainer/GridContainer
 
-@onready var ability_grid: GridContainer = $AbilityContainer/MarginContainer/VBoxContainer/AbilityGrid
+@onready var ability_grid: GridContainer = $SubViewportContainer/SubViewport/AbilityContainer/MarginContainer/VBoxContainer/AbilityGrid
+
+# spawn conss?
+const MAX_ENEMY_TABLE: int = 15
 
 #var enemies_array : Array[EnemyNode] 
 var active_threats_dict : Dictionary[String, EnemyNode] = {
@@ -35,7 +40,11 @@ var active_threats_dict : Dictionary[String, EnemyNode] = {
 	#"a5",
 }
 
+var upgrades_table : Dictionary = {}
+
 var ability_dict : Dictionary[String, AbilityNode] = {}
+
+var isViolence: bool = false
 
 var QueryReply : Dictionary = {
 	"/ping": "pong!",
@@ -74,6 +83,7 @@ func get_entities()->void:
 			key+= str(iter)
 			active_threats_dict[key] = e
 			e.deal_damage.connect(_on_take_damage)
+			e.died.connect(func()->void: print("popped ", key); active_threats_dict.erase(key))
 			iter += 1
 			
 			#print(active_threats_dict.find_key(e))
@@ -126,6 +136,10 @@ func _process(delta: float) -> void:
 	var minutes :float= god_time / 60
 	var seconds : float= fmod(god_time, 60)
 	
+	if not isViolence:
+		GameGlobals.d_time += delta
+	var dtime_display : float = fmod(GameGlobals.d_time, 60)
+	
 	#var stringtest: String = "23:" + "22"
 	var minute_string : String = ""
 	if minutes >= 1:
@@ -144,10 +158,12 @@ func _process(delta: float) -> void:
 		second_string = "%01d" % seconds
 	
 	var time_string: String = "T:" + minute_string + second_string
+	
+	var dtime_string: String = "D%3d" % dtime_display 
 	#time_string = time_string.replace("0", "")
 	
 	timer_label.text = time_string
-	
+	d_label.text = dtime_string
 	#update
 
 
@@ -159,11 +175,14 @@ func add_line_to_status(line: String)->void:
 # ITEMS
 
 func use_ability(ability: AbilityNode, enemy: EnemyNode)->void:
+	
 	if ability.params.type == ability.params.HitType.SINGLE:
 		if !enemy:
 			print("specify coord")
 		else:
 			enemy.take_damage(ability.params.power)
+	
+	ability.timer.start()
 
 func _on_line_submission(new_query: String) -> void:
 	var query :String = new_query.to_lower()
@@ -186,18 +205,24 @@ func _on_line_submission(new_query: String) -> void:
 		
 		var ability :AbilityNode= ability_dict.get(comm_arr[0])
 		var enemy :EnemyNode= active_threats_dict.get(comm_arr[1])
-		
-		use_ability(ability, enemy)
-		
-		reply = "used %s on %s (%s)" % [ability.params.name, enemy.params.name, active_threats_dict.find_key(enemy)]
-		
+		if ability.timer.is_stopped():
+			use_ability(ability, enemy)
+			if active_threats_dict.has(comm_arr[1]):
+				reply = "used %s on %s (%s)" % [ability.params.name, enemy.params.name, active_threats_dict.find_key(enemy)]
+			else:
+				reply = "destroyed %s with %s" % [enemy.params.name, ability.params.name]
+		else:
+			reply = "ability on cooldown"
 		#pass
 	elif reply == "used ":
 		if comm_arr.size() == 3 and ability_dict.has(comm_arr[1]) and active_threats_dict.has(comm_arr[2]):
 			var ability :AbilityNode= ability_dict.get(comm_arr[1])
 			var enemy :EnemyNode= active_threats_dict.get(comm_arr[2])
-			use_ability(ability, enemy)
-			reply = "used %s on %s (%s)" % [ability.params.name, enemy.params.name, active_threats_dict.find_key(enemy)]
+			if ability.timer.is_stopped():
+				use_ability(ability, enemy)
+				reply = "used %s on %s (%s)" % [ability.params.name, enemy.params.name, active_threats_dict.find_key(enemy)]
+			else:
+				reply = "ability on cooldown"
 		elif comm_arr.size() == 1:
 			reply = "usage: USE <ability> <coord>\ncoords are a1 - c5 "
 		else:

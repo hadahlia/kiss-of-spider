@@ -3,6 +3,8 @@ class_name EnemyNode
 
 signal deal_damage(power: int)
 
+signal died
+
 @onready var attack_delay: Timer = $attack_delay
 
 @onready var icon: TextureRect = $HBoxContainer/icon
@@ -42,4 +44,5 @@ func take_damage(dmg:int)->void:
 		die()
 
 func die()->void:
+	died.emit()
 	queue_free()
