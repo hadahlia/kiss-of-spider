@@ -13,7 +13,7 @@ config_version=5
 config/name="rot_jam"
 run/main_scene="uid://b4xme2l8v8w5l"
 config/features=PackedStringArray("4.6", "GL Compatibility")
-run/max_fps=300
+run/max_fps=60
 config/icon="res://icon.svg"
 
 [audio]
@@ -25,6 +25,10 @@ buses/default_bus_layout="uid://dhn654chhx000"
 SoundPlayer="*uid://dj4y5tlhqqqd4"
 AssetsList="*uid://c6uro7k4qb1ga"
 GameGlobals="*uid://colkbobtlap55"
+
+[debug]
+
+settings/stdout/print_fps=true
 
 [display]
 
