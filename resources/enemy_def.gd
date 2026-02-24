@@ -7,3 +7,5 @@ class_name EnemyParams
 @export var health: int = 10
 @export var power: int = 1
 @export var speed: float = 3.0
+@export var base_exp_yield: int = 1
+@export var starting_dist: float = 100.0

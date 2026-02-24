@@ -4,6 +4,7 @@ extends Control
 
 var max_health: int
 var player_health: int = 20
+var girl_exp: int = 0
 #var player_position:= Vector3.ZERO
 @onready var hp_bar: ProgressBar = $SubViewportContainer/SubViewport/HPBar
 @onready var health_label: Label = $SubViewportContainer/SubViewport/HPBar/health_label
@@ -25,8 +26,10 @@ var god_time : float = 0
 @onready var enemies: Node = $Enemies
 
 @onready var enemy_grid: GridContainer = $SubViewportContainer/SubViewport/EnemyTable/HBoxContainer/VBoxContainer/GridContainer
+#@onready var grid_container: GridContainer = $SubViewportContainer/SubViewport/EnemyTable/HBoxContainer/VBoxContainer/GridContainer
 
 @onready var ability_grid: GridContainer = $SubViewportContainer/SubViewport/AbilityContainer/MarginContainer/VBoxContainer/AbilityGrid
+@onready var spawn_system: SpawnSystem = $spawn_system
 
 # spawn conss?
 const MAX_ENEMY_TABLE: int = 15
@@ -66,6 +69,41 @@ func _ready() -> void:
 	update_player_health()
 	#update_player_level()
 	update_player_experience()
+	
+	spawn_system.spawn_wave.connect(_add_enemies)
+
+
+func _add_enemies(num_guys:int)->void:
+	var enems := enemy_grid.get_children()
+	var size_ec :int= enems.size()
+	
+	var guys_amt:int = size_ec
+	
+	
+	
+	
+	
+	for i in range(num_guys):
+		if guys_amt >= 15: 
+			print("full of guys! attempting replace!")
+			for e in enems:
+				if e.is_dead:
+					e.reset(AssetsList.PARAMS_ENEMY_MOE)
+					print("replaced ")
+				else:
+					print("welp")
+			
+			call_deferred("get_entities")
+			return
+		var enem := AssetsList.ENEMY_DATA.instantiate() as EnemyNode
+		enem.params = AssetsList.PARAMS_ENEMY_MOE
+		enemy_grid.add_child(enem)
+		#guys_amt += 1
+		print("number of guys: ", guys_amt)
+	
+	print("spawned ", num_guys)
+	call_deferred("get_entities")
+
 
 func get_entities()->void:
 	var ec :Array[Node]= enemy_grid.get_children()
@@ -74,16 +112,31 @@ func get_entities()->void:
 	var key: String = "a"
 	for e in ec:
 		if e is EnemyNode:
-			if iter > 10:
+			var id := iter
+			if iter > 15:
+				print("nope! iter 15")
+			elif iter > 10:
 				key = "c"
+				id %= 10
+				#if id==0: id+=1
 			elif iter > 5:
-				key = "b"
+				key = "b" 
+				id = (id % 6 ) + 1
+				if id==0:
+					id+=1
 			else:
 				key = "a"
-			key+= str(iter)
+			key+= str(id)
 			active_threats_dict[key] = e
-			e.deal_damage.connect(_on_take_damage)
-			e.died.connect(func()->void: print("popped ", key); active_threats_dict.erase(key))
+			if not e.deal_damage.is_connected(_on_take_damage):
+				e.deal_damage.connect(_on_take_damage)
+				e.died.connect(func()->void:
+					#print("popped ", key)
+					#active_threats_dict.erase(key)
+					#active_threats_dict
+					girl_exp += e.params.base_exp_yield
+					call_deferred("get_entities")
+				)
 			iter += 1
 			
 			#print(active_threats_dict.find_key(e))
@@ -126,6 +179,8 @@ func get_abilities()->void:
 			
 	
 	print("ability dictionary size: ", ability_dict.size())
+
+
 
 #func _input(event: InputEvent) -> void:
 	#if Input.is_action_just_pressed("ui_cancel"):
@@ -175,7 +230,7 @@ func add_line_to_status(line: String)->void:
 # ITEMS
 
 func use_ability(ability: AbilityNode, enemy: EnemyNode)->void:
-	
+	if enemy.is_dead: return
 	if ability.params.type == ability.params.HitType.SINGLE:
 		if !enemy:
 			print("specify coord")
@@ -201,28 +256,33 @@ func _on_line_submission(new_query: String) -> void:
 	if comm_arr.size() == 2 and ability_dict.has(comm_arr[0]) and active_threats_dict.has(comm_arr[1]):
 		#@TODO assume ability is being used?
 		print("2 args pass")
-		
-		
-		var ability :AbilityNode= ability_dict.get(comm_arr[0])
-		var enemy :EnemyNode= active_threats_dict.get(comm_arr[1])
-		if ability.timer.is_stopped():
-			use_ability(ability, enemy)
-			if active_threats_dict.has(comm_arr[1]):
-				reply = "used %s on %s (%s)" % [ability.params.name, enemy.params.name, active_threats_dict.find_key(enemy)]
+		if not active_threats_dict.get(comm_arr[1]).is_dead:
+			var ability :AbilityNode= ability_dict.get(comm_arr[0])
+			var enemy :EnemyNode= active_threats_dict.get(comm_arr[1])
+			if ability.timer.is_stopped():
+				use_ability(ability, enemy)
+				if not active_threats_dict.get(comm_arr[1]).is_dead:
+					reply = "used %s on %s (%s)" % [ability.params.name, enemy.params.name, active_threats_dict.find_key(enemy)]
+				else:
+					reply = "destroyed %s with %s" % [enemy.params.name, ability.params.name]
 			else:
-				reply = "destroyed %s with %s" % [enemy.params.name, ability.params.name]
+				reply = "ability on cooldown"
 		else:
-			reply = "ability on cooldown"
+			reply = "nothing there."
 		#pass
 	elif reply == "used ":
 		if comm_arr.size() == 3 and ability_dict.has(comm_arr[1]) and active_threats_dict.has(comm_arr[2]):
-			var ability :AbilityNode= ability_dict.get(comm_arr[1])
-			var enemy :EnemyNode= active_threats_dict.get(comm_arr[2])
-			if ability.timer.is_stopped():
-				use_ability(ability, enemy)
-				reply = "used %s on %s (%s)" % [ability.params.name, enemy.params.name, active_threats_dict.find_key(enemy)]
+			if not active_threats_dict.get(comm_arr[2]).is_dead:
+				var ability :AbilityNode= ability_dict.get(comm_arr[1])
+				var enemy :EnemyNode= active_threats_dict.get(comm_arr[2])
+				if ability.timer.is_stopped():
+					use_ability(ability, enemy)
+					reply = "used %s on %s (%s)" % [ability.params.name, enemy.params.name, active_threats_dict.find_key(enemy)]
+				else:
+					reply = "ability on cooldown"
 			else:
-				reply = "ability on cooldown"
+				reply = "nothing there."
+			
 		elif comm_arr.size() == 1:
 			reply = "usage: USE <ability> <coord>\ncoords are a1 - c5 "
 		else:

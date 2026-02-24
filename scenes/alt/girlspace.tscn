@@ -114,15 +114,15 @@ texture = SubResource("ViewportTexture_mfurw")
 stretch_mode = 2
 
 [node name="EnemyTable" type="PanelContainer" parent="SubViewportContainer/SubViewport" unique_id=800806561]
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -399.0
-offset_top = -226.0
-offset_right = -12.0
-offset_bottom = -10.0
+anchors_preset = -1
+anchor_left = 0.98300004
+anchor_top = 0.029000001
+anchor_right = 0.98300004
+anchor_bottom = 0.029000001
+offset_left = -386.76
+offset_top = 0.07999992
+offset_right = 0.23999023
+offset_bottom = 216.08
 grow_horizontal = 0
 grow_vertical = 2
 theme_override_styles/panel = ExtResource("2_ai2b7")
@@ -191,8 +191,9 @@ text = "5"
 
 [node name="GridContainer" type="GridContainer" parent="SubViewportContainer/SubViewport/EnemyTable/HBoxContainer/VBoxContainer" unique_id=1015551520]
 layout_mode = 2
+size_flags_vertical = 3
 theme = ExtResource("1_grvlt")
-theme_override_constants/h_separation = -5
+theme_override_constants/h_separation = 22
 theme_override_constants/v_separation = 12
 columns = 5
 

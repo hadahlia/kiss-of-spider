@@ -20,5 +20,5 @@ func _ready() -> void:
 	ability_cooldown.max_value = timer.wait_time
 	ability_cooldown.value = 0
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	ability_cooldown.value = timer.time_left

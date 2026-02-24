@@ -3,12 +3,24 @@
 [ext_resource type="Script" uid="uid://bmxnqbowgo7h0" path="res://scripts/alt/enemy_data.gd" id="1_gfn3m"]
 [ext_resource type="Texture2D" uid="uid://djjhvnib11cg2" path="res://materials/default_enemy.tres" id="1_h1411"]
 [ext_resource type="Resource" uid="uid://dkld0mkglxfcy" path="res://resources/enemies/enemy_moe.tres" id="2_f41ae"]
+[ext_resource type="Texture2D" uid="uid://bov5j7c0e7ym0" path="res://img/ui/fuck_yeah.png" id="3_5yjac"]
 
 [node name="EnemyData" type="VBoxContainer" unique_id=2110023014]
+offset_right = 81.0
+offset_bottom = 73.0
 theme_override_constants/separation = 1
 alignment = 2
 script = ExtResource("1_gfn3m")
 params = ExtResource("2_f41ae")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=441577662]
+clip_contents = true
+custom_minimum_size = Vector2(48, 32)
+layout_mode = 2
+size_flags_vertical = 0
+texture = ExtResource("3_5yjac")
+expand_mode = 5
+flip_h = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=2032362022]
 layout_mode = 2
@@ -23,13 +35,13 @@ texture = ExtResource("1_h1411")
 layout_mode = 2
 size_flags_vertical = 1
 theme_override_font_sizes/font_size = 18
-text = "Thomasz"
+text = "MOE"
 
 [node name="stats" type="Label" parent="." unique_id=147550801]
 layout_mode = 2
 theme_override_constants/line_spacing = -1
-theme_override_font_sizes/font_size = 16
-text = "HP :FUCK
+theme_override_font_sizes/font_size = 14
+text = "HP X POW X
 999m"
 horizontal_alignment = 1
 

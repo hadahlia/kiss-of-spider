@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://duyr5itflpuyi"]
+
+[ext_resource type="Script" uid="uid://eion6iar1tjx" path="res://scenes/alt/enemy_2.gd" id="1_ikovk"]
+[ext_resource type="PackedScene" uid="uid://qjukwsvipt12" path="res://scenes/alt/enemy_data.tscn" id="2_ikovk"]
+
+[node name="enemy2" type="BoxContainer" unique_id=606150094]
+offset_right = 85.0
+offset_bottom = 72.0
+alignment = 1
+script = ExtResource("1_ikovk")
+
+[node name="EnemyData" parent="." unique_id=2110023014 instance=ExtResource("2_ikovk")]
+layout_mode = 2

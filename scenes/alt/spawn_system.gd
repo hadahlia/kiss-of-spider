@@ -1,6 +1,8 @@
 extends Node
 class_name SpawnSystem
 
+signal spawn_wave(num: int)
+
 @export var difficulty_curve: Curve
 
 @export var minute_max_diff : float = 15.0
@@ -28,8 +30,10 @@ func print_thingy()->void:
 	var thingy := sample_diff_curve(GameGlobals.d_time / 60)
 	
 	print("how many things i wish i could spawn: ", ceil(thingy))
+	
+	spawn_wave.emit(int(ceil(thingy)))
 
 func _on_wave_timeout()->void:
-	spawn_timer.wait_time -= 0.1 if spawn_timer.wait_time > 0 else 0
+	spawn_timer.wait_time -= 0.1 if spawn_timer.wait_time > 0. else 0.
 	
 	print_thingy()
