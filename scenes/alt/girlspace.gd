@@ -5,11 +5,13 @@ extends Control
 var max_health: int
 var player_health: int = 20
 var girl_exp: int = 0
+var girl_lv : int = 1
+var next_exp: int = 1000
 #var player_position:= Vector3.ZERO
 @onready var hp_bar: ProgressBar = $SubViewportContainer/SubViewport/HPBar
 @onready var health_label: Label = $SubViewportContainer/SubViewport/HPBar/health_label
 
-@onready var level: Label = $SubViewportContainer/SubViewport/ExpBar/level
+@onready var level_tag: Label = $SubViewportContainer/SubViewport/ExpBar/level
 @onready var exp_progress: Label = $SubViewportContainer/SubViewport/ExpBar/exp_progress
 
 
@@ -65,9 +67,9 @@ func _ready() -> void:
 	
 	call_deferred("get_abilities")
 	call_deferred("get_entities")
-	
+	next_exp = next_level(girl_lv)
 	update_player_health()
-	#update_player_level()
+	update_player_level()
 	update_player_experience()
 	
 	spawn_system.spawn_wave.connect(_add_enemies)
@@ -136,6 +138,8 @@ func get_entities()->void:
 					#active_threats_dict
 					girl_exp += e.params.base_exp_yield
 					call_deferred("get_entities")
+					call_deferred("update_player_experience")
+					call_deferred("update_player_level")
 				)
 			iter += 1
 			
@@ -160,11 +164,28 @@ func update_player_health()->void:
 	if player_health == 0:
 		get_tree().paused = true
 
+func next_level(level: int)->int:
+	var exponent:float = 2.1
+	var base_exp: float = 10.0
+	var result :int= floori(base_exp * (pow(level, exponent)))
+	print("next level: ", result)
+	return result #round((4 * (level^3))/ 5)
+
 func update_player_experience()->void:
-	pass
+	exp_progress.text = "%d/%d" % [girl_exp, next_exp]
+	
+	if girl_exp >= next_exp:
+		girl_level_up()
 
 func update_player_level()->void:
-	pass
+	level_tag.text = "LV " + str(girl_lv)
+
+func girl_level_up()->void:
+	girl_lv += 1
+	var reset_exp :int= next_exp - girl_exp
+	girl_exp = 0 + reset_exp
+	next_exp = next_level(girl_lv)
+	update_player_experience()
 
 
 func get_abilities()->void:
@@ -296,3 +317,9 @@ func _on_line_submission(new_query: String) -> void:
 func _on_line_edit_editing_toggled(toggled_on: bool) -> void:
 	if not toggled_on:
 		line_edit.edit()
+
+
+func do_effect(effect: EffectItem)->void:
+	#TODO pass effect, do damage rules, effect.activate()
+	effect.activate()
+	pass

@@ -21,11 +21,13 @@ layout_mode = 2
 texture = ExtResource("1_r5dvk")
 
 [node name="ability_name" type="Label" parent="HBoxContainer" unique_id=1491247862]
+z_index = 1
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "Scrape"
 
 [node name="ability_cooldown" type="ProgressBar" parent="HBoxContainer/ability_name" unique_id=1045820906]
+z_index = -1
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.48800004

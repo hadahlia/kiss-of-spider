@@ -4,14 +4,25 @@
 [ext_resource type="Texture2D" uid="uid://djjhvnib11cg2" path="res://materials/default_enemy.tres" id="1_h1411"]
 [ext_resource type="Resource" uid="uid://dkld0mkglxfcy" path="res://resources/enemies/enemy_moe.tres" id="2_f41ae"]
 [ext_resource type="Texture2D" uid="uid://bov5j7c0e7ym0" path="res://img/ui/fuck_yeah.png" id="3_5yjac"]
+[ext_resource type="FontFile" uid="uid://dmdle8rcp3pq0" path="res://font/GelatinMonoTTF.ttf" id="5_n14vm"]
+
+[sub_resource type="Gradient" id="Gradient_5yjac"]
+offsets = PackedFloat32Array(0, 0.029598309, 0.46934462, 0.8625793, 1)
+colors = PackedColorArray(0.56922776, 0.13247035, 0, 1, 1.4369954, 0, 0, 1, 1.4369954, 1.3031164, 0.4329037, 1, 1.3945211, 1.3926891, 1.3807817, 1, 1.4369954, 1.4369954, 1.4369954, 1)
+
+[sub_resource type="FontVariation" id="FontVariation_e11qw"]
+base_font = ExtResource("5_n14vm")
+spacing_top = -2
+spacing_bottom = -1
 
 [node name="EnemyData" type="VBoxContainer" unique_id=2110023014]
 offset_right = 81.0
 offset_bottom = 73.0
-theme_override_constants/separation = 1
+theme_override_constants/separation = 2
 alignment = 2
 script = ExtResource("1_gfn3m")
 params = ExtResource("2_f41ae")
+distance_col = SubResource("Gradient_5yjac")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=441577662]
 clip_contents = true
@@ -24,7 +35,7 @@ flip_h = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=2032362022]
 layout_mode = 2
-theme_override_constants/separation = 2
+theme_override_constants/separation = 4
 
 [node name="icon" type="TextureRect" parent="HBoxContainer" unique_id=658668233]
 layout_mode = 2
@@ -39,10 +50,18 @@ text = "MOE"
 
 [node name="stats" type="Label" parent="." unique_id=147550801]
 layout_mode = 2
-theme_override_constants/line_spacing = -1
-theme_override_font_sizes/font_size = 14
-text = "HP X POW X
-999m"
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = SubResource("FontVariation_e11qw")
+theme_override_font_sizes/font_size = 16
+text = "HP X POW X"
+horizontal_alignment = 3
+
+[node name="distance_tag" type="Label" parent="." unique_id=1586909193]
+layout_mode = 2
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = SubResource("FontVariation_e11qw")
+theme_override_font_sizes/font_size = 18
+text = "999m"
 horizontal_alignment = 1
 
 [node name="attack_delay" type="Timer" parent="." unique_id=1872374341]

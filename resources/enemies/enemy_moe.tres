@@ -7,7 +7,6 @@
 script = ExtResource("1_co8r0")
 name = "MOE"
 health = 4
-power = 0
 speed = 5.0
-base_exp_yield = 10
+base_exp_yield = 7
 metadata/_custom_type_script = "uid://bweywgc1qqmno"

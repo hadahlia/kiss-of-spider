@@ -15,8 +15,6 @@
 [ext_resource type="AudioStream" uid="uid://bglit84hpsej8" path="res://sounds/music/bmtl_slurm_loop.mp3" id="9_5mdao"]
 [ext_resource type="Script" uid="uid://drr4t8sowdksx" path="res://scenes/alt/what.gd" id="10_dp30q"]
 [ext_resource type="Script" uid="uid://uewm6rtr7s86" path="res://scenes/alt/pause_screen.gd" id="12_5qrec"]
-[ext_resource type="Script" uid="uid://bboap2niodr2o" path="res://scenes/alt/inventory.gd" id="14_qjufq"]
-[ext_resource type="Script" uid="uid://c6jllhg8c7wg2" path="res://scenes/alt/passive_item.gd" id="15_tpmkp"]
 
 [sub_resource type="Curve" id="Curve_8rero"]
 _data = [Vector2(0, 0.026946187), 0.0, 0.0, 0, 0, Vector2(0.46492985, 0.2215569), 0.0, 0.0, 0, 0, Vector2(0.741483, 0.7129491), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -79,7 +77,6 @@ wait_time = 10.0
 autostart = true
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=26375848]
-process_mode = 3
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -89,7 +86,6 @@ grow_vertical = 2
 stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1973959542]
-process_mode = 3
 handle_input_locally = false
 size = Vector2i(860, 640)
 size_2d_override = Vector2i(720, 480)
@@ -105,7 +101,6 @@ grow_vertical = 2
 color = Color(0.08, 0.0464, 0.0352, 1)
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer/SubViewport" unique_id=104041464]
-process_mode = 1
 own_world_3d = true
 transparent_bg = true
 size = Vector2i(256, 256)
@@ -113,7 +108,6 @@ size = Vector2i(256, 256)
 [node name="dizzy_woman" parent="SubViewportContainer/SubViewport/SubViewport" unique_id=352445960 instance=ExtResource("2_mfurw")]
 
 [node name="spin_girl_tex" type="TextureRect" parent="SubViewportContainer/SubViewport" unique_id=1786100602]
-process_mode = 1
 offset_left = 34.325584
 offset_top = 49.25
 offset_right = 318.97678
@@ -122,7 +116,6 @@ texture = SubResource("ViewportTexture_mfurw")
 stretch_mode = 2
 
 [node name="EnemyTable" type="PanelContainer" parent="SubViewportContainer/SubViewport" unique_id=800806561]
-process_mode = 1
 anchors_preset = -1
 anchor_left = 0.98300004
 anchor_top = 0.029000001
@@ -144,7 +137,6 @@ theme_override_constants/margin_top = 0
 [node name="HBoxContainer" type="HBoxContainer" parent="SubViewportContainer/SubViewport/EnemyTable" unique_id=1284590285]
 layout_mode = 2
 theme = ExtResource("1_grvlt")
-theme_override_constants/separation = 8
 
 [node name="rows" type="VBoxContainer" parent="SubViewportContainer/SubViewport/EnemyTable/HBoxContainer" unique_id=975610658]
 layout_mode = 2
@@ -168,58 +160,49 @@ text = "C"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="SubViewportContainer/SubViewport/EnemyTable/HBoxContainer" unique_id=1148530843]
 layout_mode = 2
-theme_override_constants/separation = 2
 
 [node name="columns" type="HBoxContainer" parent="SubViewportContainer/SubViewport/EnemyTable/HBoxContainer/VBoxContainer" unique_id=100087487]
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_constants/separation = 68
-alignment = 1
 
 [node name="1" type="Label" parent="SubViewportContainer/SubViewport/EnemyTable/HBoxContainer/VBoxContainer/columns" unique_id=808666709]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "1"
-horizontal_alignment = 1
 
 [node name="2" type="Label" parent="SubViewportContainer/SubViewport/EnemyTable/HBoxContainer/VBoxContainer/columns" unique_id=1359757046]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "2"
-horizontal_alignment = 1
 
 [node name="3" type="Label" parent="SubViewportContainer/SubViewport/EnemyTable/HBoxContainer/VBoxContainer/columns" unique_id=147225105]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "3"
-horizontal_alignment = 1
 
 [node name="4" type="Label" parent="SubViewportContainer/SubViewport/EnemyTable/HBoxContainer/VBoxContainer/columns" unique_id=778002837]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "4"
-horizontal_alignment = 1
 
 [node name="5" type="Label" parent="SubViewportContainer/SubViewport/EnemyTable/HBoxContainer/VBoxContainer/columns" unique_id=2034289797]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "5"
-horizontal_alignment = 1
 
 [node name="GridContainer" type="GridContainer" parent="SubViewportContainer/SubViewport/EnemyTable/HBoxContainer/VBoxContainer" unique_id=1015551520]
-z_index = 1
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("1_grvlt")
-theme_override_constants/h_separation = 16
-theme_override_constants/v_separation = 4
+theme_override_constants/h_separation = 22
+theme_override_constants/v_separation = 12
 columns = 5
 
 [node name="EnemyData" parent="SubViewportContainer/SubViewport/EnemyTable/HBoxContainer/VBoxContainer/GridContainer" unique_id=2110023014 instance=ExtResource("5_tsibi")]
 layout_mode = 2
 
 [node name="StatusBox" type="PanelContainer" parent="SubViewportContainer/SubViewport" unique_id=1400587337]
-process_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -265,7 +248,6 @@ deselect_on_focus_loss_enabled = false
 drag_and_drop_selection_enabled = false
 
 [node name="omega" type="TextureRect" parent="SubViewportContainer/SubViewport" unique_id=2101487689]
-process_mode = 1
 texture_filter = 1
 material = SubResource("CanvasItemMaterial_c8afo")
 anchors_preset = 8
@@ -284,9 +266,8 @@ texture = ExtResource("3_c8afo")
 stretch_mode = 2
 
 [node name="HPBar" type="ProgressBar" parent="SubViewportContainer/SubViewport" unique_id=1970796589]
-process_mode = 1
 offset_left = 321.0
-offset_top = 240.0
+offset_top = 231.0
 offset_right = 449.0
 offset_bottom = 264.0
 size_flags_vertical = 3
@@ -315,9 +296,8 @@ text = "HP ?/?"
 horizontal_alignment = 1
 
 [node name="ExpBar" type="HBoxContainer" parent="SubViewportContainer/SubViewport" unique_id=1234640972]
-process_mode = 1
 offset_left = 458.0
-offset_top = 239.99998
+offset_top = 230.0
 offset_right = 706.0
 offset_bottom = 262.0
 theme = ExtResource("1_grvlt")
@@ -337,7 +317,6 @@ text = "0/1000"
 horizontal_alignment = 2
 
 [node name="AbilityContainer" type="PanelContainer" parent="SubViewportContainer/SubViewport" unique_id=1384086236]
-process_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -373,7 +352,6 @@ layout_mode = 2
 params = ExtResource("7_tsibi")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="SubViewportContainer/SubViewport" unique_id=1084373393]
-process_mode = 1
 offset_left = 362.0
 offset_top = 438.0
 offset_right = 579.0
@@ -427,7 +405,6 @@ theme_override_font_sizes/font_size = 24
 text = "ITEM"
 
 [node name="TimerLabel" type="Label" parent="SubViewportContainer/SubViewport" unique_id=1383520618]
-process_mode = 1
 offset_left = 16.0
 offset_top = 16.0
 offset_right = 284.0
@@ -437,7 +414,6 @@ theme_override_font_sizes/font_size = 31
 text = "TIME: PLACEHOLDER"
 
 [node name="DLabel" type="Label" parent="SubViewportContainer/SubViewport" unique_id=1033337063]
-process_mode = 1
 offset_left = 18.418606
 offset_top = 41.25
 offset_right = 286.4186
@@ -447,7 +423,6 @@ theme_override_font_sizes/font_size = 31
 text = "D: unk"
 
 [node name="ColorRect2" type="ColorRect" parent="SubViewportContainer/SubViewport" unique_id=404547193]
-process_mode = 1
 visible = false
 anchors_preset = 4
 anchor_top = 0.5
@@ -460,7 +435,6 @@ grow_vertical = 2
 rotation = 0.72082096
 
 [node name="what" type="Control" parent="SubViewportContainer/SubViewport" unique_id=1877008368]
-process_mode = 1
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -598,7 +572,6 @@ vertical_alignment = 1
 
 [node name="PauseScreen" type="Control" parent="SubViewportContainer/SubViewport" unique_id=894484205]
 process_mode = 3
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -607,15 +580,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_grvlt")
 script = ExtResource("12_5qrec")
-
-[node name="ColorRect" type="ColorRect" parent="SubViewportContainer/SubViewport/PauseScreen" unique_id=834811269]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 0.5764706)
 
 [node name="Label" type="Label" parent="SubViewportContainer/SubViewport/PauseScreen" unique_id=1453940969]
 layout_mode = 0
@@ -636,10 +600,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Inventory" type="Node" parent="." unique_id=1665850782]
-script = ExtResource("14_qjufq")
-
-[node name="item" type="Node" parent="Inventory" unique_id=603957821]
-script = ExtResource("15_tpmkp")
 
 [node name="Enemies" type="Node" parent="." unique_id=2002367906]
 
