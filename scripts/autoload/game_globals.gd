@@ -4,3 +4,7 @@ extends Node
 #var cursor_pos_viewport : Vector2
 #var cursor_pos_3d : Vector3
 var d_time: float
+
+const D_FACTOR: float = 1.1
+
+var GirlLevel: int

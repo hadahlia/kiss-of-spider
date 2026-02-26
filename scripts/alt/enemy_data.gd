@@ -9,6 +9,7 @@ const MAX_DISTANCE: float = 19898.0
 
 @onready var attack_delay: Timer = $attack_delay
 
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 
 @onready var icon: TextureRect = $HBoxContainer/icon
@@ -37,6 +38,9 @@ func set_params()->void:
 	
 	start_distance = distance
 	params = params.duplicate()
+	var new_health:int = params.health * roundi(GameGlobals.GirlLevel / GameGlobals.D_FACTOR)
+	print("new health: ", new_health)
+	params.health = new_health if new_health > params.health else params.health
 	
 	$TextureRect.hide()
 	$HBoxContainer.show()
@@ -70,8 +74,11 @@ func _process(delta: float) -> void:
 
 func take_damage(dmg:int)->void:
 	params.health -= dmg
+	animation_player.play("damage_wiggle")
+	
 	if params.health <= 0:
 		params.health = 0
+		await animation_player.animation_finished
 		die()
 
 func reset(new_params: EnemyParams)->void:
@@ -84,6 +91,7 @@ func reset(new_params: EnemyParams)->void:
 	set_process(true)
 
 func die()->void:
+	if is_dead: return
 	died.emit()
 	$TextureRect.show()
 	$HBoxContainer.hide()

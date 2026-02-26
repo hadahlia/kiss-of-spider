@@ -5,14 +5,14 @@ extends Control
 var max_health: int
 var player_health: int = 20
 var girl_exp: int = 0
-var girl_lv : int = 1
+#var girl_lv : int = 1
 var next_exp: int = 1000
 #var player_position:= Vector3.ZERO
 @onready var hp_bar: ProgressBar = $SubViewportContainer/SubViewport/HPBar
 @onready var health_label: Label = $SubViewportContainer/SubViewport/HPBar/health_label
 
-@onready var level_tag: Label = $SubViewportContainer/SubViewport/ExpBar/level
-@onready var exp_progress: Label = $SubViewportContainer/SubViewport/ExpBar/exp_progress
+@onready var level_tag: Label = $SubViewportContainer/SubViewport/PanelContainer/ExpBar/level
+@onready var exp_progress: Label = $SubViewportContainer/SubViewport/PanelContainer/ExpBar/exp_progress
 
 
 @onready var status_text: RichTextLabel = $SubViewportContainer/SubViewport/StatusBox/VBox/StatusText
@@ -60,6 +60,7 @@ var QueryReply : Dictionary = {
 }
 
 func _ready() -> void:
+	GameGlobals.GirlLevel = 1
 	max_health = player_health
 	status_text.text = ""
 	
@@ -67,7 +68,7 @@ func _ready() -> void:
 	
 	call_deferred("get_abilities")
 	call_deferred("get_entities")
-	next_exp = next_level(girl_lv)
+	next_exp = next_level(GameGlobals.GirlLevel)
 	update_player_health()
 	update_player_level()
 	update_player_experience()
@@ -137,6 +138,7 @@ func get_entities()->void:
 					#active_threats_dict.erase(key)
 					#active_threats_dict
 					girl_exp += e.params.base_exp_yield
+					call_deferred("check_the_dead")
 					call_deferred("get_entities")
 					call_deferred("update_player_experience")
 					call_deferred("update_player_level")
@@ -145,6 +147,28 @@ func get_entities()->void:
 			
 			#print(active_threats_dict.find_key(e))
 	print("enemy dictionary size: ", active_threats_dict.size())
+
+
+func check_the_dead()->void:
+	# what i want to happen.
+	# when enemy dies, loop through enemy dict. if all are dead, add enemy
+	var iter: int = 0
+	for at in active_threats_dict:
+		if active_threats_dict[at].is_dead:
+			iter += 1
+	
+	
+	if iter >= active_threats_dict.size():
+		print("all dead. next wave")
+		spawn_system.reset_wave_time()
+		await get_tree().create_timer(1.0).timeout
+		
+		spawn_system.reset_wave_time()
+		spawn_system.print_thingy()
+		#if $spawn_system/SpawnTimer.wait_time > 1.0: 
+			#$spawn_system/SpawnTimer.wait_time = 1.0
+		#_add_enemies(1)
+
 
 func _on_take_damage(dmg: int)->void:
 	player_health -= dmg
@@ -178,13 +202,15 @@ func update_player_experience()->void:
 		girl_level_up()
 
 func update_player_level()->void:
-	level_tag.text = "LV " + str(girl_lv)
+	level_tag.text = "LV " + str(GameGlobals.GirlLevel)
 
 func girl_level_up()->void:
-	girl_lv += 1
-	var reset_exp :int= next_exp - girl_exp
-	girl_exp = 0 + reset_exp
-	next_exp = next_level(girl_lv)
+	#girl_lv += 1
+	GameGlobals.GirlLevel += 1
+	var reset_exp :int=  girl_exp - next_exp
+	
+	girl_exp = 0 + reset_exp if reset_exp > 0 else 0
+	next_exp = next_level(GameGlobals.GirlLevel)
 	update_player_experience()
 
 

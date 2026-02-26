@@ -22,6 +22,10 @@
 _data = [Vector2(0, 0.026946187), 0.0, 0.0, 0, 0, Vector2(0.46492985, 0.2215569), 0.0, 0.0, 0, 0, Vector2(0.741483, 0.7129491), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 4
 
+[sub_resource type="Curve" id="Curve_tpmkp"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.41082165, 0.57672155), -2.5073683, -2.5073683, 0, 0, Vector2(0.7755511, 0.21182638), 0.0, 0.0, 0, 0, Vector2(1, 0.19723058), -0.13487603, 0.0, 0, 0]
+point_count = 4
+
 [sub_resource type="ViewportTexture" id="ViewportTexture_mfurw"]
 viewport_path = NodePath("SubViewportContainer/SubViewport/SubViewport")
 
@@ -50,7 +54,7 @@ shader_parameter/tex = SubResource("ViewportTexture_v3l75")
 shader_parameter/mask_type = 5
 shader_parameter/curve = 0.0400000019
 shader_parameter/color_offset = 0.1000000285
-shader_parameter/mask_brightness = 1.0
+shader_parameter/mask_brightness = 0.79200003762
 shader_parameter/aspect = 0.75
 
 [sub_resource type="Environment" id="Environment_1cq7x"]
@@ -73,9 +77,10 @@ script = ExtResource("1_lklr1")
 [node name="spawn_system" type="Node" parent="." unique_id=1931520733]
 script = ExtResource("2_8rero")
 difficulty_curve = SubResource("Curve_8rero")
+time_curve = SubResource("Curve_tpmkp")
 
 [node name="SpawnTimer" type="Timer" parent="spawn_system" unique_id=1217757632]
-wait_time = 10.0
+wait_time = 5.0
 autostart = true
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=26375848]
@@ -102,7 +107,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.08, 0.0464, 0.0352, 1)
+color = Color(0.12, 0.057600003, 0.118959986, 1)
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer/SubViewport" unique_id=104041464]
 process_mode = 1
@@ -314,22 +319,33 @@ theme_override_font_sizes/font_size = 28
 text = "HP ?/?"
 horizontal_alignment = 1
 
-[node name="ExpBar" type="HBoxContainer" parent="SubViewportContainer/SubViewport" unique_id=1234640972]
+[node name="PanelContainer" type="PanelContainer" parent="SubViewportContainer/SubViewport" unique_id=1741772781]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -234.41861
+offset_top = 0.75
+offset_right = -24.279053
+offset_bottom = 21.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("2_ai2b7")
+
+[node name="ExpBar" type="HBoxContainer" parent="SubViewportContainer/SubViewport/PanelContainer" unique_id=1234640972]
 process_mode = 1
-offset_left = 458.0
-offset_top = 239.99998
-offset_right = 706.0
-offset_bottom = 262.0
+layout_mode = 2
 theme = ExtResource("1_grvlt")
 theme_override_constants/separation = 100
 
-[node name="level" type="Label" parent="SubViewportContainer/SubViewport/ExpBar" unique_id=2104786314]
+[node name="level" type="Label" parent="SubViewportContainer/SubViewport/PanelContainer/ExpBar" unique_id=2104786314]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.198706, 0.6858773, 0.10127167, 1)
 theme_override_font_sizes/font_size = 22
 text = "LV 0"
 
-[node name="exp_progress" type="Label" parent="SubViewportContainer/SubViewport/ExpBar" unique_id=1097035871]
+[node name="exp_progress" type="Label" parent="SubViewportContainer/SubViewport/PanelContainer/ExpBar" unique_id=1097035871]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.198706, 0.6858773, 0.10127167, 1)
 theme_override_font_sizes/font_size = 22
@@ -446,7 +462,7 @@ theme = ExtResource("1_grvlt")
 theme_override_font_sizes/font_size = 31
 text = "D: unk"
 
-[node name="ColorRect2" type="ColorRect" parent="SubViewportContainer/SubViewport" unique_id=404547193]
+[node name="debugsquare" type="ColorRect" parent="SubViewportContainer/SubViewport" unique_id=404547193]
 process_mode = 1
 visible = false
 anchors_preset = 4

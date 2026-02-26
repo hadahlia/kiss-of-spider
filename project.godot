@@ -26,10 +26,6 @@ SoundPlayer="*uid://dj4y5tlhqqqd4"
 AssetsList="*uid://c6uro7k4qb1ga"
 GameGlobals="*uid://colkbobtlap55"
 
-[debug]
-
-settings/stdout/print_fps=true
-
 [display]
 
 window/size/viewport_width=860

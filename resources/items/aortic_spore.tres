@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ItemParams" format=3 uid="uid://bwv0fe5cgejmc"]
+
+[ext_resource type="Script" uid="uid://cy5ltv6ey0sk0" path="res://resources/item_def.gd" id="1_dcig0"]
+
+[resource]
+script = ExtResource("1_dcig0")
+name = "Aortic Spores"
+item_type = 1
+radius = 5.0
+metadata/_custom_type_script = "uid://cy5ltv6ey0sk0"
