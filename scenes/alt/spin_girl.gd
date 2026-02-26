@@ -5,6 +5,6 @@ extends Node3D
 @export var spin_speed: float = 1.1
 
 func _physics_process(delta: float) -> void:
-	
-	redoll_2_rigged.rotate_x(delta * spin_speed)
 	redoll_2_rigged.rotate_y(delta * (spin_speed/2))
+	redoll_2_rigged.rotate_x(delta * (spin_speed * GameGlobals.GirlLevel))
+	

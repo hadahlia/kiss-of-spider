@@ -28,9 +28,10 @@ GameGlobals="*uid://colkbobtlap55"
 
 [display]
 
-window/size/viewport_width=860
-window/size/viewport_height=640
+window/size/viewport_width=1055
+window/size/viewport_height=580
 window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
 
 [editor_plugins]
 
