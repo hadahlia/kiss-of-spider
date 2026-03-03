@@ -33,6 +33,9 @@ var god_time : float = 0
 @onready var ability_grid: GridContainer = $SubViewportContainer/SubViewport/AbilityContainer/MarginContainer/VBoxContainer/AbilityGrid
 @onready var spawn_system: SpawnSystem = $spawn_system
 
+
+@onready var spiders_kiss: SpidersKiss = $SubViewportContainer/SubViewport/SpidersKiss
+
 # spawn conss?
 const MAX_ENEMY_TABLE: int = 15
 
@@ -50,6 +53,16 @@ var upgrades_table : Dictionary = {}
 var ability_dict : Dictionary[String, AbilityNode] = {}
 
 var isViolence: bool = false
+
+var isDead: bool = false
+
+var DeathReply : Dictionary[String,Callable] = {
+	"new hope": func()->void:(get_tree().change_scene_to_file("res://scenes/alt/viewport_2.tscn")),
+	"annihilation": func()->void:(get_tree().change_scene_to_file("res://scenes/alt/viewport_3.tscn"))
+}
+
+# theoretically, annihilation will just kill the game. new hope restarts from new hope
+
 
 var QueryReply : Dictionary = {
 	"/ping": "pong!",
@@ -186,7 +199,14 @@ func update_player_health()->void:
 	health_label.text = "HP %d/%d" % [player_health, max_health]
 	
 	if player_health == 0:
+		# die real
+		
+		GameGlobals.GirlDead = true
 		get_tree().paused = true
+		
+		await get_tree().create_timer(3.0).timeout
+		
+		$SubViewportContainer/SubViewport/WhatIsIt.show()
 
 func next_level(level: int)->int:
 	var exponent:float = 2.1
@@ -195,14 +215,17 @@ func next_level(level: int)->int:
 	print("next level: ", result)
 	return result #round((4 * (level^3))/ 5)
 
+
 func update_player_experience()->void:
 	exp_progress.text = "%d/%d" % [girl_exp, next_exp]
 	
 	if girl_exp >= next_exp:
 		girl_level_up()
 
+
 func update_player_level()->void:
 	level_tag.text = "LV " + str(GameGlobals.GirlLevel)
+
 
 func girl_level_up()->void:
 	#girl_lv += 1
@@ -212,6 +235,10 @@ func girl_level_up()->void:
 	girl_exp = 0 + reset_exp if reset_exp > 0 else 0
 	next_exp = next_level(GameGlobals.GirlLevel)
 	update_player_experience()
+	
+	spiders_kiss._toggle_screen()
+	add_line_to_status("please pick an item with 1 2 or 3")
+	spiders_kiss.set_items()
 
 
 func get_abilities()->void:
@@ -287,6 +314,51 @@ func use_ability(ability: AbilityNode, enemy: EnemyNode)->void:
 	ability.timer.start()
 
 func _on_line_submission(new_query: String) -> void:
+	if GameGlobals.GirlDead:
+		#var query :String = new_query.to_lower()
+		add_line_to_status(">>" + new_query)
+		#var comm_arr :PackedStringArray= query.split(" ", true, 2)
+		var unrecognized : String = "choose."
+		var reply :Variant= DeathReply.get(new_query, unrecognized)
+		
+		#add_line_to_status(reply)
+		if reply is Callable:
+			reply.call_deferred()
+		if reply is String:
+			add_line_to_status(reply)
+		#call("reply")
+		$SubViewportContainer/SubViewport/StatusBox/VBox/LineEdit/sound.play()
+		line_edit.text = ""
+		return
+	elif GameGlobals.LevelScreen:
+		var repl: String = " "
+		# spider screen logick
+		var query :String = new_query.to_lower()
+		match query.replace(" ", ""):
+			"1":
+				# item 1
+				spiders_kiss._toggle_screen()
+			"2":
+				# item 2
+				spiders_kiss._toggle_screen()
+			"3":
+				# item 3
+				spiders_kiss._toggle_screen()
+			_:
+				repl = "that is not a choice."
+				#return
+		
+		
+		add_line_to_status(">>" + query)
+		add_line_to_status(repl)
+		$SubViewportContainer/SubViewport/StatusBox/VBox/LineEdit/sound.play()
+		line_edit.text = ""
+		return
+	elif get_tree().paused:
+		add_line_to_status("(game is paused.)")
+		$SubViewportContainer/SubViewport/StatusBox/VBox/LineEdit/sound.play()
+		return
+	
 	var query :String = new_query.to_lower()
 	add_line_to_status(">>" + query)
 	var unrecognized : String = "Unrecognized Query"
@@ -336,6 +408,8 @@ func _on_line_submission(new_query: String) -> void:
 			reply = "ability not recognized."
 	#else:
 	add_line_to_status(reply)
+	
+	$SubViewportContainer/SubViewport/StatusBox/VBox/LineEdit/sound.play()
 	
 	line_edit.text = ""
 

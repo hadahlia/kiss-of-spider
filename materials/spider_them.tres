@@ -1,0 +1,7 @@
+[gd_resource type="Theme" format=3 uid="uid://dvu1ofg6is0ak"]
+
+[ext_resource type="FontFile" uid="uid://dmdle8rcp3pq0" path="res://font/GelatinMonoTTF.ttf" id="1_83iyj"]
+
+[resource]
+default_font = ExtResource("1_83iyj")
+default_font_size = 28

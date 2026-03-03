@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://dpvb1ab78p5ix"]
+
+[ext_resource type="PackedScene" uid="uid://c0qcpq4qcq2bt" path="res://scenes/alt/dawn.tscn" id="1_bpfq0"]
+[ext_resource type="Shader" uid="uid://ck5sbl2yksb7d" path="res://scenes/alt/crt.gdshader" id="2_2v7r4"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_f0km1"]
+viewport_path = NodePath("SubViewportContainer/SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uglff"]
+resource_local_to_scene = true
+shader = ExtResource("2_2v7r4")
+shader_parameter/tex = SubResource("ViewportTexture_f0km1")
+shader_parameter/mask_type = 5
+shader_parameter/curve = 0.0400000019
+shader_parameter/color_offset = 0.1000000285
+shader_parameter/mask_brightness = 0.79200003762
+shader_parameter/aspect = 0.75
+
+[node name="viewport2" type="Control" unique_id=2019347625]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1808623721]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1114496168]
+process_mode = 3
+handle_input_locally = false
+size = Vector2i(860, 640)
+size_2d_override = Vector2i(720, 480)
+size_2d_override_stretch = true
+render_target_update_mode = 4
+
+[node name="ColorRect" type="ColorRect" parent="SubViewportContainer/SubViewport" unique_id=2098076781]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.12, 0.057600003, 0.118959986, 1)
+
+[node name="Dawn" parent="SubViewportContainer/SubViewport" unique_id=1040420666 instance=ExtResource("1_bpfq0")]
+
+[node name="CRT" type="ColorRect" parent="." unique_id=1901086319]
+material = SubResource("ShaderMaterial_uglff")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

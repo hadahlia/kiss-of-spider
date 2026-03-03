@@ -78,7 +78,7 @@ func take_damage(dmg:int)->void:
 	
 	if params.health <= 0:
 		params.health = 0
-		await animation_player.animation_finished
+		
 		die()
 
 func reset(new_params: EnemyParams)->void:
@@ -92,11 +92,17 @@ func reset(new_params: EnemyParams)->void:
 
 func die()->void:
 	if is_dead: return
-	died.emit()
+	
+	
+	
+	
+	is_dead = true
+	set_process(false)
+	
+	await animation_player.animation_finished
 	$TextureRect.show()
 	$HBoxContainer.hide()
 	stats.hide()
 	distance_tag.hide()
-	is_dead = true
-	set_process(false)
+	died.emit()
 	#queue_free()

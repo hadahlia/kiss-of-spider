@@ -7,5 +7,8 @@ class_name EffectItem
 
 #sound. name
 
+func spawn_effect()->void:
+	pass
+
 func _activate()->void:
 	pass

@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://c0qcpq4qcq2bt"]
+
+[ext_resource type="Script" uid="uid://cn6pokpm3xwtk" path="res://scenes/alt/dawn.gd" id="1_ijjp6"]
+[ext_resource type="VideoStream" uid="uid://bw16prel1yrd6" path="res://img/movie/evil_1.ogv" id="2_kh6eo"]
+
+[node name="Dawn" type="Control" unique_id=1040420666]
+z_index = 4
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ijjp6")
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="." unique_id=78513007]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 1
+stream = ExtResource("2_kh6eo")
+speed_scale = 2.2
+autoplay = true
+
+[connection signal="finished" from="VideoStreamPlayer" to="." method="_on_video_stream_player_finished"]

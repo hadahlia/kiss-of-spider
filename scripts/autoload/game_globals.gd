@@ -8,3 +8,7 @@ var d_time: float
 const D_FACTOR: float = 1.1
 
 var GirlLevel: int
+
+var GirlDead: bool = false
+var newDawn: bool = true
+var LevelScreen: bool = false

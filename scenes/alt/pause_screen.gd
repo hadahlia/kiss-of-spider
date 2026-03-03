@@ -4,7 +4,8 @@ func _ready() -> void:
 	hide()
 
 func _input(_event: InputEvent) -> void:
-	if Input.is_action_just_pressed("ui_cancel"):
+	if GameGlobals.newDawn: return
+	if not GameGlobals.LevelScreen and not GameGlobals.GirlDead and Input.is_action_just_pressed("ui_cancel"):
 		pause()
 
 
